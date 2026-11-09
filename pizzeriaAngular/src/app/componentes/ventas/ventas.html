@@ -1,0 +1,98 @@
+<div class="bg-[#435728] min-h-screen py-6 px-4">
+  <div class="max-w-6xl mx-auto p-6 my-6 rounded-2xl shadow-xl bg-white border-2 border-[#201d00]">
+    
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center mb-6 pb-4 border-b-2 border-[#e6d6bc]">
+      <div>
+        <h2 class="text-2xl font-black text-[#435728] tracking-tight uppercase">Consulta de Ventas y Reportes</h2>
+      </div>
+      <a [routerLink]="['/inicio']" 
+         class="px-4 py-3 rounded-xl text-xs font-bold border-2 border-[#201d00] bg-[#e6d6bc] text-[#201d00] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all">
+         Regresar al inicio
+      </a>
+    </div>
+
+    <!-- Filtro -->
+    <div class="p-5 rounded-xl border-2 border-[#201d00] bg-[#e6d6bc] mb-6 grid grid-cols-1 md:grid-cols-3 gap-4 items-end shadow-sm">
+      <div>
+        <label class="block text-xs font-bold text-[#201d00] mb-1">Tipo de consulta</label>
+        <select [(ngModel)]="tipoBusqueda" class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] font-medium focus:outline-none focus:ring-2 focus:ring-[#435728]">
+          <option value="dia">Por día</option>
+          <option value="mes">Por mes</option>
+        </select>
+      </div>
+
+      <!-- Filtro por dia -->
+      <div *ngIf="tipoBusqueda === 'dia'">
+        <label class="block text-xs font-bold text-[#201d00] mb-1">Día</label>
+        <select [(ngModel)]="diaSeleccionado" class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] font-medium focus:outline-none focus:ring-2 focus:ring-[#435728]">
+          <option *ngFor="let d of diasSemana" [value]="d.value">{{ d.label }}</option>
+        </select>
+      </div>
+
+      <!-- Filtro por mes -->
+      <div *ngIf="tipoBusqueda === 'mes'" class="grid grid-cols-2 gap-2">
+        <div>
+          <label class="block text-xs font-bold text-[#201d00] mb-1">Mes</label>
+          <select [(ngModel)]="mesSeleccionado" class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] font-medium focus:outline-none focus:ring-2 focus:ring-[#435728]">
+            <option value="01">Enero</option>
+            <option value="02">Febrero</option>
+            <option value="03">Marzo</option>
+            <option value="04">Abril</option>
+            <option value="05">Mayo</option>
+            <option value="06">Junio</option>
+            <option value="07">Julio</option>
+            <option value="08">Agosto</option>
+            <option value="09">Septiembre</option>
+            <option value="10">Octubre</option>
+            <option value="11">Noviembre</option>
+            <option value="12">Diciembre</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-[#201d00] mb-1">Año</label>
+          <input type="text" [(ngModel)]="anioSeleccionado" class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] font-bold focus:outline-none focus:ring-2 focus:ring-[#435728]">
+        </div>
+      </div>
+
+      <div>
+        <button (click)="buscarVentas()" 
+                class="w-full text-white uppercase font-black p-2.5 rounded-lg text-sm border-2 border-[#201d00] bg-[#435728] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all">
+          Consultar ventas
+        </button>
+      </div>
+    </div>
+
+    <!-- Tabla de resultados -->
+    <div class="overflow-x-auto mb-6 rounded-xl border-2 border-[#201d00] shadow-sm">
+      <table class="w-full text-left border-collapse bg-white text-sm font-medium">
+        <thead>
+          <tr class="border-b-2 border-[#201d00] text-xs uppercase tracking-wider bg-[#435728] text-[#e6d6bc]">
+            <th class="p-3">ID Pedido</th>
+            <th class="p-3">Cliente</th>
+            <th class="p-3">Fecha</th>
+            <th class="p-3">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let venta of resultadosVentas" class="border-b border-[#e6d6bc] hover:bg-[#435728]/10 transition text-[#201d00]">
+            <td class="p-3 font-black text-[#435728]">#{{ venta.id_pedido }}</td>
+            <td class="p-3 font-bold">{{ venta.nombre }}</td>
+            <td class="p-3 text-gray-600 text-xs">{{ venta.fecha_pedido }}</td>
+            <td class="p-3 font-black text-[#435728]">${{ venta.total || venta.total_pedido }}</td>
+          </tr>
+          <tr *ngIf="resultadosVentas.length === 0">
+            <td colspan="4" class="p-8 text-center text-gray-500 italic font-medium">No se encontraron ventas para este periodo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Venta total -->
+    <div class="flex justify-end p-5 rounded-xl border-2 border-[#201d00] bg-[#e6d6bc] shadow-sm">
+      <div class="text-xl font-black text-[#201d00]">
+        Venta Total del Periodo: <span class="text-2xl text-[#435728] font-black">${{ totalVentasPeriodo }}</span>
+      </div>
+    </div>
+  </div>
+</div>

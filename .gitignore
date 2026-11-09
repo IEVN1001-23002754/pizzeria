@@ -1,0 +1,15 @@
+# Flask
+pizzeriaFlask/venv/
+pizzeriaFlask/__pycache__/
+pizzeriaFlask/*.pyc
+pizzeriaFlask/instance/
+pizzeriaFlask/.env
+
+# Angular
+pizzeriaAngular/node_modules/
+pizzeriaAngular/.angular/
+pizzeriaAngular/dist/
+
+# Sistema
+.DS_Store
+Thumbs.db

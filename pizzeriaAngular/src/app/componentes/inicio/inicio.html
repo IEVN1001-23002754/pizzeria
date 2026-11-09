@@ -1,0 +1,44 @@
+<div class="min-h-[100vh] flex flex-col items-center justify-center p-6 bg-[#c98d4c]">
+  <div class="w-full max-w-4xl p-8 md:p-12 rounded-2xl bg-white border-2 border-[#201d00] relative">
+    <div class="absolute -top-5 left-1/2 transform -translate-x-1/2 bg-[#85391e] text-white px-6 py-2 rounded-xl text-sm md:text-base font-black tracking-widest uppercase border-2 border-[#201d00] shadow-[2px_2px_0px_0px_#201d00] text-center">
+      Pizzería Artesanal & Tradicional
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-6">
+      
+      <!-- Columna izquierda imagen -->
+      <div class="w-full aspect-square rounded-xl border-2 border-[#201d00] overflow-hidden shadow-[4px_4px_0px_0px_#201d00] bg-[#e6d6bc] flex items-center justify-center p-4 m-2">
+        <img src="imagenes/pizza.png" class="w-full h-full object-cover rounded-lg animate-spin-slow">
+      </div>
+
+      <!-- Columna derecha texto y botones -->
+      <div class="flex flex-col justify-center space-y-6">
+          <div>
+              <h1 class="text-3xl md:text-4xl font-black tracking-tight text-[#85391e] mb-3">
+                SISTEMA DE GESTIÓN
+              </h1>
+              <p class="text-sm md:text-base text-[#201d00] font-medium leading-relaxed">
+                Seleccione un apartado para realizar y gestionar diferente información.
+              </p>
+          </div>
+          
+          <!-- Botones -->
+          <div class="flex flex-col space-y-4">
+              <a [routerLink]="['/registro-pedido']" 
+                class="group p-4 rounded-xl border-2 border-[#201d00] bg-[#85391e] text-white shadow-[4px_4px_0px_0px_#201d00] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[6px_6px_0px_0px_#201d00] transition-all flex flex-col items-center text-center">
+                <span class="text-base font-black tracking-wide group-hover:underline">Registrar nuevo pedido</span>
+              </a>
+
+              <!-- Consultar Ventas (Secundario - Verde Oliva) -->
+              <a [routerLink]="['/ventas']" 
+                class="group p-4 rounded-xl border-2 border-[#201d00] bg-[#435728] text-white shadow-[4px_4px_0px_0px_#201d00] hover:translate-x-[-4px] hover:translate-y-[-4px] hover:shadow-[6px_6px_0px_0px_#201d00] transition-all flex flex-col items-center text-center">
+                <span class="text-base font-black tracking-wide group-hover:underline">Consultar ventas</span>
+              </a>
+          </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

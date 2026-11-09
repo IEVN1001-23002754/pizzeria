@@ -1,0 +1,225 @@
+<div class="bg-[#85391e] min-h-screen py-6 px-4">
+    <div class="max-w-7xl mx-auto p-6 my-6 rounded-2xl shadow-xl bg-white border-2 border-[#201d00]">
+      
+          <!-- Encabezado -->
+          <div class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-4 border-b-2 border-[#e6d6bc] gap-4">
+              <div>
+                  <h2 class="text-2xl font-black text-[#85391e] uppercase tracking-tight">GESTIÓN DE COMANDAS</h2>
+              </div>
+              <div class="flex items-center gap-2">
+                  <button type="button" (click)="nuevoPedido()" 
+                          class="px-4 py-3 rounded-xl text-xs font-bold border-2 border-[#201d00] bg-[#c98d4c] text-[#201d00] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all">
+                          Nuevo Pedido
+                  </button>
+                  <a [routerLink]="['/inicio']" 
+                    class="px-4 py-3 rounded-xl text-xs font-bold border-2 border-[#201d00] bg-[#e6d6bc] text-[#201d00] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-3px] hover:translate-y-[-3px] transition-all">
+                    Regresar al inicio
+                  </a>
+              </div>
+          </div>
+          
+          <form [formGroup]="pedidoForm" (ngSubmit)="agregarPizza()">
+            
+            <!-- CONTENEDOR DE DOS COLUMNAS GENERALES -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              
+              <!-- COLUMNA IZQUIERDA: Formulario (Datos del cliente + Detalles de la pizza) -->
+              <div class="space-y-6">
+                <!-- Datos del cliente -->
+                <div class="p-5 rounded-xl border-2 border-[#201d00] bg-[#e6d6bc]">
+                    <h3 class="font-black text-m uppercase tracking-wider text-[#85391e] mb-3">Datos del cliente</h3>
+                    
+                    <!-- Nombre y Dirección en una sola columna, uno debajo del otro -->
+                    <div class="space-y-3 mb-3">
+                        <div>
+                          <label class="block text-xs font-bold text-[#201d00] mb-1">Nombre</label>
+                          <input type="text" formControlName="nombre" 
+                                      class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] focus:ring-3 focus:ring-[#85391e] focus:outline-none font-medium">
+                        </div>
+                        <div>
+                          <label class="block text-xs font-bold text-[#201d00] mb-1">Dirección</label>
+                          <input type="text" formControlName="direccion" 
+                                      class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] focus:ring-3 focus:ring-[#85391e] focus:outline-none font-medium">
+                        </div>
+                    </div>
+
+                    <!-- Teléfono y Fecha en grid de dos columnas -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label class="block text-xs font-bold text-[#201d00] mb-1">Teléfono</label>
+                          <input type="text" formControlName="telefono" 
+                                      class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] focus:ring-3 focus:ring-[#85391e] focus:outline-none font-medium">
+                        </div>
+                        <div>
+                          <label class="block text-xs font-bold text-[#201d00] mb-1">Fecha de Pedido</label>
+                          <input type="date" formControlName="fecha_pedido" 
+                                      class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm bg-white text-[#201d00] focus:ring-3 focus:ring-[#85391e] focus:outline-none font-medium">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detalles de la pizza (Grid de 3 columnas) -->
+                <div class="p-5 rounded-xl border-2 border-[#201d00] bg-[#e6d6bc]">
+                  <h3 class="font-black text-m uppercase tracking-wider text-[#85391e] mb-3">Detalles de la pizza</h3>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    
+                    <!-- Tamaño -->
+                    <div>
+                      <label class="block font-black text-xs uppercase text-[#85391e] mb-2">Tamaño</label>
+                      <div class="space-y-2 text-sm font-medium text-[#201d00]">
+                          <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                            <input type="radio" value="Chica" formControlName="tamano" class="mr-2 text-[#85391e] focus:ring-[#85391e]"> Chica — $40
+                          </label>
+                          <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                            <input type="radio" value="Mediana" formControlName="tamano" class="mr-2 text-[#85391e] focus:ring-[#85391e]"> Mediana — $80
+                          </label>
+                          <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                            <input type="radio" value="Grande" formControlName="tamano" class="mr-2 text-[#85391e] focus:ring-[#85391e]"> Grande — $120
+                          </label>
+                      </div>
+                    </div>
+
+                    <!-- Ingredientes -->
+                    <div>
+                      <label class="block font-black text-xs uppercase text-[#85391e] mb-2">Ingredientes ($10 c/u)</label>
+                      <div class="space-y-2 text-sm font-medium text-[#201d00]">
+                        <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                          <input type="checkbox" value="Jamón" (change)="onCheckboxChange($event)" class="mr-2 rounded border-2 border-[#201d00] text-[#85391e]"> Jamón
+                        </label>
+                        <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                          <input type="checkbox" value="Piña" (change)="onCheckboxChange($event)" class="mr-2 rounded border-2 border-[#201d00] text-[#85391e]"> Piña
+                        </label>
+                        <label class="flex items-center cursor-pointer p-1 rounded-lg hover:bg-white/70">
+                          <input type="checkbox" value="Champiñones" (change)="onCheckboxChange($event)" class="mr-2 rounded border-2 border-[#201d00] text-[#85391e]"> Champiñones
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Cantidad y Agregar -->
+                    <div>
+                      <label class="block font-black text-xs uppercase text-[#85391e] mb-2">Cantidad</label>
+                      <input type="number" formControlName="num_pizzas" min="1" 
+                              class="w-full p-2.5 border-2 border-[#201d00] rounded-lg text-sm mb-3 bg-white font-bold text-[#201d00] focus:ring-3 focus:ring-[#85391e] focus:outline-none">
+                      
+                      <button type="submit" [disabled]="pedidoForm.invalid" 
+                              class="w-full text-white font-black p-2.5 rounded-xl border-2 border-[#201d00] bg-[#85391e] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all disabled:opacity-40 disabled:cursor-not-allowed text-xs">
+                              Agregar al Pedido
+                      </button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+              <!-- COLUMNA DERECHA: Resumen del pedido - Tabla y Total -->
+              <div class="flex flex-col justify-between">
+                <div>
+                  <h3 class="text-lg font-black uppercase text-[#85391e] mb-4">Resumen del pedido actual</h3>
+                  
+                  <div class="overflow-x-auto mb-4 rounded-xl border-2 border-[#201d00] shadow-sm">
+                    <table class="w-full text-left border-collapse bg-white text-sm font-medium">
+                      <thead>
+                          <tr class="border-b-2 border-[#201d00] text-m uppercase tracking-wider bg-[#85391e] text-white">
+                            <th class="p-3 text-m">Tamaño</th>
+                            <th class="p-3 text-m">Ingredientes</th>
+                            <th class="p-3 text-m">Num Pizzas</th>
+                            <th class="p-3 text-m">Subtotal</th>
+                            <th class="p-3 text-m text-center">Acciones</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          <tr *ngFor="let item of listaTemporal" class="border-b border-[#e6d6bc] hover:bg-[#85391e]/10 transition text-[#201d00]">
+                            <td class="p-3 text-m font-black text-[#85391e]">{{ item.tamano }}</td>
+                            <td class="p-3 text-m text-gray-700 text-xs">
+                              {{ Array.isArray(item.ingredientes) ? item.ingredientes.join(', ') : item.ingredientes }}
+                            </td>
+                            <td class="p-3 text-m font-bold">{{ item.num_pizzas }}</td>
+                            <td class="p-3 text-m font-black text-[#85391e]">${{ item.subtotal }}</td>
+                            <td class="p-3 text-m text-center">
+                              <button (click)="quitarPizza(item.id || item.id_temporal)" 
+                                      class="text-white px-3 py-1.5 rounded-lg text-xs font-bold border border-[#201d00] bg-[#85391e] shadow-[2px_2px_0px_0px_#201d00] hover:translate-x-[-2px] hover:translate-y-[-2px] transition-all">
+                                      Quitar
+                              </button>
+                            </td>
+                          </tr>
+                          <tr *ngIf="listaTemporal.length === 0">
+                            <td colspan="5" class="p-8 text-center text-gray-400 font-medium">Aún no hay pizzas agregadas en este pedido.</td>
+                          </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <!-- Total y cierre -->
+                <div class="space-y-4">
+                  <!-- Mensaje -->
+                  <div *ngIf="mensajeExito" class="p-4 rounded-xl text-center font-black text-s uppercase border-2 border-[#201d00] bg-[#85391e] text-white">
+                    {{ mensajeExito }}
+                  </div>
+
+                  <div class="flex flex-col sm:flex-row justify-between items-center p-5 rounded-xl border-2 border-[#201d00] bg-[#e6d6bc] gap-4 shadow-sm">
+                    <div class="text-xl font-black text-[#201d00]">
+                      Total a Pagar: <span class="text-2xl text-[#85391e] font-black">${{ totalGeneral }}</span>
+                    </div>
+                    <button (click)="terminarPedido()" [disabled]="listaTemporal.length === 0"
+                            class="text-white uppercase px-6 py-3.5 rounded-xl font-black text-m border-2 border-[#201d00] bg-[#85391e] shadow-[3px_3px_0px_0px_#201d00] hover:translate-x-[-3px] hover:translate-y-[-3px] hover:shadow-[4px_4px_0px_0px_#201d00] transition-all disabled:opacity-40 disabled:cursor-not-allowed">
+                            Terminar pedido
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </form>
+    </div>
+
+    <!-- MODAL TICKET ESTILO IMPRESO -->
+    <div *ngIf="mostrarModalTicket" class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div class="bg-[#fffdf9] p-8 rounded-2xl shadow-2xl max-w-md w-full font-mono text-sm border-2 border-dashed border-[#85391e] relative">
+        
+        <!-- Encabezado Ticket -->
+        <div class="text-center border-b-2 border-dashed border-[#85391e] pb-4 mb-4">
+          <h2 class="font-black text-xl tracking-widest text-[#85391e]">PIZZERÍA ARTESANAL</h2>
+          <p class="text-gray-600 mt-1 text-xs font-bold">TICKET DE VENTA OFICIAL</p>
+          <p class="text-gray-800 font-bold text-base mt-1">Folio: #{{ datosTicket?.folio }}</p>
+          <p class="text-gray-500 text-xs">{{ datosTicket?.fecha }}</p>
+        </div>
+
+        <!-- Cliente -->
+        <div class="mb-4 border-b-2 border-dashed border-[#85391e] pb-3">
+          <p class="font-black uppercase text-xs text-[#85391e] mb-1">CLIENTE:</p>
+          <div class="text-gray-900 font-bold text-sm">
+            <p>• {{ datosTicket?.cliente?.nombre }}</p>
+            <p class="text-xs font-normal text-gray-700">Tel: {{ datosTicket?.cliente?.telefono }}</p>
+            <p class="text-xs font-normal text-gray-700">Dir: {{ datosTicket?.cliente?.direccion }}</p>
+          </div>
+        </div>
+
+        <!-- Productos -->
+        <div class="mb-4 border-b-2 border-dashed border-[#85391e] pb-3">
+          <p class="font-black uppercase text-xs text-[#85391e] mb-2">CONCEPTOS:</p>
+          <div *ngFor="let p of datosTicket?.pizzas" class="flex justify-between mb-2 text-gray-900 text-sm font-bold">
+            <span>{{ p.num_pizzas }}x Pizza {{ p.tamano }} <br><span class="text-xs text-gray-600 font-normal">({{ p.ingredientes }})</span></span>
+            <span class="text-[#85391e]">${{ p.subtotal }}</span>
+          </div>
+        </div>
+
+        <!-- Total -->
+        <div class="flex justify-between font-black text-lg mb-6 pt-2 border-t-2 border-dashed border-[#85391e] text-[#201d00]">
+          <span>TOTAL PAGADO:</span>
+          <span class="text-[#85391e] text-xl">${{ datosTicket?.total }}</span>
+        </div>
+
+        <div class="text-center text-xs text-gray-700 mb-6 p-3 rounded-lg bg-amber-50 border border-amber-300 font-bold">
+          <p>¡Pedido guardado con éxito!</p>
+          <p class="text-[11px] text-gray-500">Ya puedes consultarlo en el panel de ventas.</p>
+        </div>
+
+        <!-- Cerrar -->
+        <button (click)="cerrarModalTicket()" 
+                class="w-full text-white py-3 rounded-xl font-sans font-black text-sm border-2 border-[#201d00] bg-[#85391e] shadow-[3px_3px_0px_0px_#201d00] hover:translate-x-[-1px] hover:translate-y-[-1px] transition-all">
+                Salir
+        </button>
+      </div>
+    </div>
+</div>
